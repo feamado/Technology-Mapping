@@ -250,15 +250,14 @@ NAND::NAND(node* parent, node* left, node* right) {
 
 
     this->parent = parent;
-    if()
-    if ((left->getINPUT() || left->getNOT()) && right->getNAND()) {
-        this->left = right;
-        this->right = left;
-    }
-    else {
-        this->left = left;
-        this->right = right;
-    }
+        if ((left->getINPUT() || left->getNOT()) && right->getNAND()) {
+            this->left = right;
+            this->right = left;
+        }
+        else {
+            this->left = left;
+            this->right = right;
+        }
     this->isNAND = true;
     this->isNOT = false;
     output = !(left->output && right->output);
@@ -755,8 +754,8 @@ OutBox min_cost_box (node* root){
         if (root->getNOT() && root->getLeft()->getNAND()) {
             Quavo.enqueue(OutBox(4 + min_cost_box(root->getLeft()->getLeft()).cost
                                  + min_cost_box(root->getLeft()->getRight()).cost, "AND2 "
-                                 + min_cost_box(root->getLeft()->getLeft()).bintree
-                                 + min_cost_box(root->getLeft()->getRight()).bintree));
+                                                                                   + min_cost_box(root->getLeft()->getLeft()).bintree
+                                                                                   + min_cost_box(root->getLeft()->getRight()).bintree));
         }
 
 
@@ -796,8 +795,8 @@ OutBox min_cost_box (node* root){
         //OR2
         if (root->getNAND() && root->getLeft()->getNOT() && root->getRight()->getNOT()) {
             Quavo.enqueue(OutBox(4
-            + min_cost_box(root->getLeft()->getLeft()).cost
-            + min_cost_box(root->getRight()->getLeft()).cost,
+                                 + min_cost_box(root->getLeft()->getLeft()).cost
+                                 + min_cost_box(root->getRight()->getLeft()).cost,
                                  "OR2 "
                                  +min_cost_box(root->getLeft()->getLeft()).bintree
                                  + min_cost_box(root->getRight()->getLeft()).bintree));
@@ -1480,6 +1479,7 @@ int main() {
     }
     std::cout << min_cost(Rod.peek_stack()) << std::endl;
     min_cost_box(Rod.peek_stack());
+    std::cout<<min_cost_box(Rod.peek_stack()).cost<<std::endl;
     // min_cost_box(Rod.peek_last());
     return 0;
 }
