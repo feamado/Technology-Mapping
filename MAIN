@@ -306,10 +306,8 @@ void NAND::print_node() {
 }
 
 
-
 //_______________________________________________________________________
 //NOT
-
 struct NOT : public node {
     int cost = 2;
 
@@ -473,162 +471,6 @@ bool Is_In_Queue(Queue<T> Q, T item) {
     }
 }
 
-void CastingSpell(node* root) {
-    if (root->getNAND()) {
-        root = dynamic_cast<NAND*>(root);
-    }
-    else if (root->getNOT()) {
-        root = dynamic_cast<NOT*>(root);
-    }
-    else if (root->getINPUT()) {
-        root = dynamic_cast<INPUT*>(root);
-    }
-
-}
-
-
-
-void DFS_Print(node* root) {
-    root->print_node();
-    Queue<node*> Search_Party = Queue<node*>();
-    Queue<node*> The_Visited = Queue<node*>();
-    Search_Party.enqueue(root);
-    The_Visited.enqueue(root);
-    node* tmp = NULL;
-    if (root->getLeft()->getNAND()) {
-        tmp = dynamic_cast<NAND*>(root->getLeft());
-    }
-    else if (root->getLeft()->getNOT()) {
-        tmp = dynamic_cast<NOT*>(root->getLeft());
-    }
-
-    while (!Search_Party.isEmpty()) {
-        //check if already mapped out and geedout
-        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp)) {
-            Search_Party.enqueue(tmp);
-            The_Visited.enqueue(tmp);
-            tmp->print_node();
-        }
-
-        tmp = Search_Party.pop()->getRight();
-
-        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp)) {
-            Search_Party.enqueue(tmp);
-            The_Visited.enqueue(tmp);
-            tmp->print_node();
-        }
-        tmp = Search_Party.peek();
-        if (tmp == NULL) {
-            return;
-        }
-        else {
-            tmp = tmp->getLeft();
-        }
-
-
-    }
-
-
-
-
-
-}
-
-
-
-
-
-
-node* DFS_Search(node* root, node* sought) {
-
-    Queue<node*> Search_Party = Queue<node*>();
-    Queue<node*> The_Visited = Queue<node*>();
-    Search_Party.enqueue(root);
-    The_Visited.enqueue(root);
-    node* tmp = NULL;
-    if (root->getLeft()->getNAND()) {
-        tmp = dynamic_cast<NAND*>(root->getLeft());
-    }
-    else if (root->getLeft()->getNOT()) {
-        tmp = dynamic_cast<NOT*>(root->getLeft());
-    }
-
-    while (!Search_Party.isEmpty()) {
-        //check if already mapped out and geedout
-        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp)) {
-            Search_Party.enqueue(tmp);
-            The_Visited.enqueue(tmp);
-            if (tmp == sought)
-                return tmp;
-        }
-
-        tmp = Search_Party.pop()->getRight();
-
-        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp)) {
-            Search_Party.enqueue(tmp);
-            The_Visited.enqueue(tmp);
-            if (tmp == sought)
-                return tmp;
-        }
-        tmp = Search_Party.peek();
-        if (tmp == NULL) {
-            return NULL;
-        }
-        else {
-            tmp = tmp->getLeft();
-        }
-
-
-    }
-
-
-
-}
-
-
-void DFS_Print_NO_INPUT(node* root) {
-    root->print_node();
-    Queue<node*> Search_Party = Queue<node*>();
-    Queue<node*> The_Visited = Queue<node*>();
-    Search_Party.enqueue(root);
-    The_Visited.enqueue(root);
-    node* tmp = NULL;
-    if (root->getLeft()->getNAND()) {
-        tmp = dynamic_cast<NAND*>(root->getLeft());
-    }
-    else if (root->getLeft()->getNOT()) {
-        tmp = dynamic_cast<NOT*>(root->getLeft());
-    }
-
-    while (!Search_Party.isEmpty()) {
-        //check if already mapped out and geedout
-        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp) && !tmp->getINPUT()) {
-            Search_Party.enqueue(tmp);
-            The_Visited.enqueue(tmp);
-            tmp->print_node();
-        }
-
-        tmp = Search_Party.pop()->getRight();
-
-        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp) && !tmp->getINPUT()) {
-            Search_Party.enqueue(tmp);
-            The_Visited.enqueue(tmp);
-            tmp->print_node();
-        }
-        tmp = Search_Party.peek();
-        if (tmp == NULL) {
-            return;
-        }
-        else {
-            tmp = tmp->getLeft();
-        }
-
-
-    }
-
-
-
-}
 
 // 0 Casting Spells Le-Epic Polymorphism
 
@@ -638,12 +480,6 @@ Queue<node*> DFS_Visited(node* root) {
     Search_Party.enqueue(root);
     The_Visited.enqueue(root);
     node* tmp;
-    /*if(root->getLeft()->getNAND()){
-        tmp = dynamic_cast<NAND*>(root->getLeft());
-    }
-    else if(root->getLeft()->getNOT()){
-        tmp = dynamic_cast<NOT*>(root->getLeft());
-    }*/
 
     tmp = root->getLeft();
 
@@ -825,10 +661,6 @@ OutBox min_cost_box (node* root){
 
     }
 
-    /*std::cout << std::endl;
-    std::cout << "MIN IN THIS LEVEL";
-    std::cout << Quavo.arr[j].cost << std::endl;
-    std::cout << "FINAL TREE " << Quavo.arr[j].bintree << std::endl;*/
     return Quavo.arr[j];
 
 
