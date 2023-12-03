@@ -5,7 +5,7 @@
 
 //Queue BEGIN
 template <class T>
-class Queue{
+class Queue {
 public:
     int size{};
     T* arr;
@@ -31,7 +31,7 @@ Queue<T>::Queue() {
 template<class T>
 void Queue<T>::enqueue(T item) {
 
-    if(size == 0){
+    if (size == 0) {
         size++;
         arr = new T[1];
         arr[0] = item;
@@ -45,31 +45,32 @@ void Queue<T>::enqueue(T item) {
         }
 
         delete[] arr;
-        tmp[size-1] = item;
+        tmp[size - 1] = item;
         arr = tmp;
         tmp = NULL;
     }
 }
 
 template<class T>
-T Queue<T>::pop(){
+T Queue<T>::pop() {
 
-    if(size == 0){
+    if (size == 0) {
         return T();
     }
-    else if(size == 1) {
+    else if (size == 1) {
         size--;
         T tmp = arr[0];
         delete[] arr;
         arr = NULL;
         return tmp;
-    }else{
+    }
+    else {
         size--;
         T tmp_item = arr[0];
         T* tmp_arr = new T[size];
 
-        for(int i = 1; i<(size+1);i++){
-            tmp_arr[i-1] = arr[i];
+        for (int i = 1; i < (size + 1); i++) {
+            tmp_arr[i - 1] = arr[i];
         }
 
         delete[] arr;
@@ -84,53 +85,55 @@ T Queue<T>::pop(){
 
 template<class T>
 void Queue<T>::print_queue() {
-    if(size == 0){
-        std::cout<<"Queue is empty"<<std::endl;
+    if (size == 0) {
+        std::cout << "Queue is empty" << std::endl;
     }
-    else{
-        for(int i = 0; i < size; i++){
-            if(i!=(size-1))
-            std::cout<<arr[i]<<",";
+    else {
+        for (int i = 0; i < size; i++) {
+            if (i != (size - 1))
+                std::cout << arr[i] << ",";
             else
-                std::cout<<arr[i];
+                std::cout << arr[i];
         }
-        std::cout<<std::endl;
+        std::cout << std::endl;
     }
 }
 
 template<class T>
 T Queue<T>::peek() {
-    if(size == 0){
+    if (size == 0) {
         return T();
     }
-    else{
+    else {
         return arr[0];
     }
 }
 template<class T>
-T Queue<T> :: peek_stack(){
-    if(size == 0){
+T Queue<T> ::peek_stack() {
+    if (size == 0) {
         return T();
     }
-    else{
-        std::cout<<size;
-        return arr[size-1];
+    else {
+        std::cout << size;
+        return arr[size - 1];
     }
 }
 
 template<class T>
-T Queue<T> :: pop_stack() {
+T Queue<T> ::pop_stack() {
     if (size == 0) {
 
         return T();
-    } else {
+    }
+    else {
         size = size - 1;
         T tmp_item = arr[size];
         if (size == 0) {
 
             delete[] arr;
             arr = nullptr;
-        } else {
+        }
+        else {
 
             T* tmp_array = new T[size];
             for (int i = 0; i < size; i++) {
@@ -144,8 +147,8 @@ T Queue<T> :: pop_stack() {
 }
 
 template<class T>
-bool Queue<T>:: isEmpty(){
-    return size==0;
+bool Queue<T>::isEmpty() {
+    return size == 0;
 }
 //Queue END
 
@@ -159,25 +162,25 @@ bool Queue<T>:: isEmpty(){
 //____________________________________________________
 //NAND AND NOT Library
 //NODE
-struct node{
-            int cost{};
-            bool isInput{};
-            bool isNAND{};
-            bool isNOT{};
-            bool output{};
-            struct node* parent{};
-            struct node* left{};
-            struct node* right{};
-            virtual bool getNAND();
-            virtual bool getNOT();
-            virtual bool getINPUT();
-            virtual node* getLeft();
-            virtual node* getRight();
-            virtual bool getOutput();
-            virtual int getCost();
-            virtual bool next_is_empty();
-            virtual void print_node();
-        };
+struct node {
+    int cost{};
+    bool isInput{};
+    bool isNAND{};
+    bool isNOT{};
+    bool output{};
+    struct node* parent{};
+    struct node* left{};
+    struct node* right{};
+    virtual bool getNAND();
+    virtual bool getNOT();
+    virtual bool getINPUT();
+    virtual node* getLeft();
+    virtual node* getRight();
+    virtual bool getOutput();
+    virtual int getCost();
+    virtual bool next_is_empty();
+    virtual void print_node();
+};
 
 
 bool node::getNAND() {
@@ -209,12 +212,12 @@ bool node::getINPUT() {
 }
 
 bool node::next_is_empty() {
-    std::cout<<"working with abstract class debug"<<std::endl;
+    std::cout << "working with abstract class debug" << std::endl;
     return false;
 }
 
-void node::print_node(){
-    std::cout<<"this is the base class node... no information"<<std::endl;
+void node::print_node() {
+    std::cout << "this is the base class node... no information" << std::endl;
 }
 
 
@@ -223,7 +226,7 @@ void node::print_node(){
 //_____________________________________________________________________
 //NAND
 
-struct NAND: public node{
+struct NAND : public node {
 
     bool isInput = false;
     bool isNOT = false;
@@ -240,15 +243,15 @@ struct NAND: public node{
     node* getRight() override;
     bool getOutput() override;
     int getCost() override;
-    NAND(node* parent,node *left, node *right);
+    NAND(node* parent, node* left, node* right);
 };
 
-NAND::NAND(node* parent, node* left , node* right){
+NAND::NAND(node* parent, node* left, node* right) {
 
 
     this->parent = parent;
 
-     if((left->getINPUT()||left->getNOT())&&right->getNAND()){
+    if ((left->getINPUT() || left->getNOT()) && right->getNAND()) {
         this->left = right;
         this->right = left;
     }
@@ -278,7 +281,7 @@ bool NAND::getOutput() {
     return this->output;
 }
 
-bool NAND:: getNAND(){
+bool NAND::getNAND() {
     return true;
 }
 
@@ -290,16 +293,16 @@ bool  NAND::getINPUT() {
     return false;
 }
 
-bool NAND::next_is_empty(){
-    return left->isInput&&right->isInput;
+bool NAND::next_is_empty() {
+    return left->isInput && right->isInput;
 }
 
 void NAND::print_node() {
-        std::cout<<"NAND_COMPONENT"<<std::endl;
-        std::cout<<"A:"<<this->left->output<<" B:"<<this->right->output<<std::endl;
-        std::cout<<"OUTPUT IS"<<std::endl;
-        std::cout<<"A NAND B = "<<this->output<<std::endl;
-        std::cout<<std::endl;
+    std::cout << "NAND_COMPONENT" << std::endl;
+    std::cout << "A:" << this->left->output << " B:" << this->right->output << std::endl;
+    std::cout << "OUTPUT IS" << std::endl;
+    std::cout << "A NAND B = " << this->output << std::endl;
+    std::cout << std::endl;
 
 }
 
@@ -308,7 +311,7 @@ void NAND::print_node() {
 //_______________________________________________________________________
 //NOT
 
-struct NOT: public node{
+struct NOT : public node {
     int cost = 2;
 
 
@@ -322,10 +325,10 @@ struct NOT: public node{
     node* getRight() override;
     bool getOutput() override;
     int getCost() override;
-    NOT(node*parent, node* child);
+    NOT(node* parent, node* child);
 };
 
-NOT::NOT(node*parent,node* child){
+NOT::NOT(node* parent, node* child) {
     this->isInput = false;
     this->isNOT = true;
     this->isNAND = false;
@@ -369,20 +372,20 @@ bool NOT::getNAND() {
 }
 
 void NOT::print_node() {
-    std::cout<<"NOT-COMPONENT"<<std::endl;
-    std::cout<<"INPUT IS"<<std::endl;
-    std::cout<<"A:"<<this->left->output<<std::endl;
-    std::cout<<"OUTPUT IS"<<std::endl;
-    std::cout<<"NOT A = "<<this->output<<std::endl;
-    std::cout<<std::endl;
+    std::cout << "NOT-COMPONENT" << std::endl;
+    std::cout << "INPUT IS" << std::endl;
+    std::cout << "A:" << this->left->output << std::endl;
+    std::cout << "OUTPUT IS" << std::endl;
+    std::cout << "NOT A = " << this->output << std::endl;
+    std::cout << std::endl;
 }
 
 //_________________
 //INPUT
 
-struct INPUT : public node{
+struct INPUT : public node {
     bool isInput = true;
-    INPUT(node* parent,bool value);
+    INPUT(node* parent, bool value);
     void print_node() override;
     bool getINPUT() override;
     bool getNAND() override;
@@ -393,7 +396,7 @@ struct INPUT : public node{
     int getCost() override;
 };
 
-INPUT::INPUT(node *parent, bool value) {
+INPUT::INPUT(node* parent, bool value) {
     this->left = NULL;
     this->right = NULL;
     this->parent = parent;
@@ -418,9 +421,9 @@ int INPUT::getCost() {
 }
 
 void INPUT::print_node() {
-    std::cout<<"THIS IS AN INPUT VARIABLE"<<std::endl;
-    std::cout<<"Current boolean value is: "<<this->output<<std::endl;
-    std::cout<<std::endl;
+    std::cout << "THIS IS AN INPUT VARIABLE" << std::endl;
+    std::cout << "Current boolean value is: " << this->output << std::endl;
+    std::cout << std::endl;
 }
 
 bool INPUT::getINPUT() {
@@ -439,31 +442,31 @@ bool INPUT::getNAND() {
 
 
 
-node* AND(node* a, node*b){
-    NAND* child = new NAND(NULL,a,b);
-    NOT* parent = new NOT(NULL,child);
+node* AND(node* a, node* b) {
+    NAND* child = new NAND(NULL, a, b);
+    NOT* parent = new NOT(NULL, child);
     child->parent = parent;
     return parent;
 }
 
-node* OR(node*a , node* b){
-    NOT* child_1 = new NOT(NULL,a);
-    NOT* child_2 = new NOT(NULL,b);
-    NAND* parent = new NAND(NULL,child_1,child_2);
+node* OR(node* a, node* b) {
+    NOT* child_1 = new NOT(NULL, a);
+    NOT* child_2 = new NOT(NULL, b);
+    NAND* parent = new NAND(NULL, child_1, child_2);
     child_1->parent;
     child_2->parent;
     return parent;
 }
 //should use pointers
 template <class T>
-bool Is_In_Queue(Queue<T> Q,T item){
+bool Is_In_Queue(Queue<T> Q, T item) {
     bool Is_In = false;
-    if(Q.isEmpty()){
+    if (Q.isEmpty()) {
         return false;
     }
-    else{
-        for(int i = 0; i<Q.size; i++){
-            if(Q.arr[i] == item)
+    else {
+        for (int i = 0; i < Q.size; i++) {
+            if (Q.arr[i] == item)
                 Is_In = true;
         }
 
@@ -471,14 +474,14 @@ bool Is_In_Queue(Queue<T> Q,T item){
     }
 }
 
-void CastingSpell(node* root){
-    if(root->getNAND()){
+void CastingSpell(node* root) {
+    if (root->getNAND()) {
         root = dynamic_cast<NAND*>(root);
     }
-    else if(root->getNOT()){
+    else if (root->getNOT()) {
         root = dynamic_cast<NOT*>(root);
     }
-    else if(root->getINPUT()){
+    else if (root->getINPUT()) {
         root = dynamic_cast<INPUT*>(root);
     }
 
@@ -486,45 +489,45 @@ void CastingSpell(node* root){
 
 
 
-void DFS_Print(node* root){
+void DFS_Print(node* root) {
     root->print_node();
     Queue<node*> Search_Party = Queue<node*>();
     Queue<node*> The_Visited = Queue<node*>();
     Search_Party.enqueue(root);
     The_Visited.enqueue(root);
-    node* tmp;
-    if(root->getLeft()->getNAND()){
-         tmp = dynamic_cast<NAND*>(root->getLeft());
+    node* tmp = NULL;
+    if (root->getLeft()->getNAND()) {
+        tmp = dynamic_cast<NAND*>(root->getLeft());
     }
-    else if(root->getLeft()->getNOT()){
-         tmp = dynamic_cast<NOT*>(root->getLeft());
+    else if (root->getLeft()->getNOT()) {
+        tmp = dynamic_cast<NOT*>(root->getLeft());
     }
 
-   while(!Search_Party.isEmpty()){
-       //check if already mapped out and geedout
-       if(tmp!=NULL&&!Is_In_Queue(The_Visited,tmp)){
-           Search_Party.enqueue(tmp);
-           The_Visited.enqueue(tmp);
-           tmp->print_node();
-       }
+    while (!Search_Party.isEmpty()) {
+        //check if already mapped out and geedout
+        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp)) {
+            Search_Party.enqueue(tmp);
+            The_Visited.enqueue(tmp);
+            tmp->print_node();
+        }
 
-       tmp = Search_Party.pop()->getRight();
+        tmp = Search_Party.pop()->getRight();
 
-       if(tmp!=NULL&&!Is_In_Queue(The_Visited,tmp)){
-           Search_Party.enqueue(tmp);
-           The_Visited.enqueue(tmp);
-           tmp->print_node();
-       }
-       tmp = Search_Party.peek();
-       if(tmp == NULL){
-           return;
-       }
-       else{
-           tmp = tmp->getLeft();
-       }
+        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp)) {
+            Search_Party.enqueue(tmp);
+            The_Visited.enqueue(tmp);
+            tmp->print_node();
+        }
+        tmp = Search_Party.peek();
+        if (tmp == NULL) {
+            return;
+        }
+        else {
+            tmp = tmp->getLeft();
+        }
 
 
-   }
+    }
 
 
 
@@ -537,42 +540,42 @@ void DFS_Print(node* root){
 
 
 
-node* DFS_Search(node* root,node* sought){
+node* DFS_Search(node* root, node* sought) {
 
     Queue<node*> Search_Party = Queue<node*>();
     Queue<node*> The_Visited = Queue<node*>();
     Search_Party.enqueue(root);
     The_Visited.enqueue(root);
-    node* tmp;
-    if(root->getLeft()->getNAND()){
+    node* tmp = NULL;
+    if (root->getLeft()->getNAND()) {
         tmp = dynamic_cast<NAND*>(root->getLeft());
     }
-    else if(root->getLeft()->getNOT()){
+    else if (root->getLeft()->getNOT()) {
         tmp = dynamic_cast<NOT*>(root->getLeft());
     }
 
-    while(!Search_Party.isEmpty()){
+    while (!Search_Party.isEmpty()) {
         //check if already mapped out and geedout
-        if(tmp!=NULL&&!Is_In_Queue(The_Visited,tmp)){
+        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp)) {
             Search_Party.enqueue(tmp);
             The_Visited.enqueue(tmp);
-            if(tmp == sought)
+            if (tmp == sought)
                 return tmp;
         }
 
         tmp = Search_Party.pop()->getRight();
 
-        if(tmp!=NULL&&!Is_In_Queue(The_Visited,tmp)){
+        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp)) {
             Search_Party.enqueue(tmp);
             The_Visited.enqueue(tmp);
-            if(tmp == sought)
+            if (tmp == sought)
                 return tmp;
         }
         tmp = Search_Party.peek();
-        if(tmp == NULL){
+        if (tmp == NULL) {
             return NULL;
         }
-        else{
+        else {
             tmp = tmp->getLeft();
         }
 
@@ -584,23 +587,23 @@ node* DFS_Search(node* root,node* sought){
 }
 
 
-void DFS_Print_NO_INPUT(node* root){
+void DFS_Print_NO_INPUT(node* root) {
     root->print_node();
     Queue<node*> Search_Party = Queue<node*>();
     Queue<node*> The_Visited = Queue<node*>();
     Search_Party.enqueue(root);
     The_Visited.enqueue(root);
-    node* tmp;
-    if(root->getLeft()->getNAND()){
+    node* tmp = NULL;
+    if (root->getLeft()->getNAND()) {
         tmp = dynamic_cast<NAND*>(root->getLeft());
     }
-    else if(root->getLeft()->getNOT()){
+    else if (root->getLeft()->getNOT()) {
         tmp = dynamic_cast<NOT*>(root->getLeft());
     }
 
-    while(!Search_Party.isEmpty()){
+    while (!Search_Party.isEmpty()) {
         //check if already mapped out and geedout
-        if(tmp!=NULL&&!Is_In_Queue(The_Visited,tmp)&&!tmp->getINPUT()){
+        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp) && !tmp->getINPUT()) {
             Search_Party.enqueue(tmp);
             The_Visited.enqueue(tmp);
             tmp->print_node();
@@ -608,16 +611,16 @@ void DFS_Print_NO_INPUT(node* root){
 
         tmp = Search_Party.pop()->getRight();
 
-        if(tmp!=NULL&&!Is_In_Queue(The_Visited,tmp)&&!tmp->getINPUT()){
+        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp) && !tmp->getINPUT()) {
             Search_Party.enqueue(tmp);
             The_Visited.enqueue(tmp);
             tmp->print_node();
         }
         tmp = Search_Party.peek();
-        if(tmp == NULL){
+        if (tmp == NULL) {
             return;
         }
-        else{
+        else {
             tmp = tmp->getLeft();
         }
 
@@ -630,7 +633,7 @@ void DFS_Print_NO_INPUT(node* root){
 
 // 0 Casting Spells Le-Epic Polymorphism
 
-Queue<node*> DFS_Visited(node* root){
+Queue<node*> DFS_Visited(node* root) {
     Queue<node*> Search_Party = Queue<node*>();
     Queue<node*> The_Visited = Queue<node*>();
     Search_Party.enqueue(root);
@@ -645,24 +648,24 @@ Queue<node*> DFS_Visited(node* root){
 
     tmp = root->getLeft();
 
-    while(!Search_Party.isEmpty()){
+    while (!Search_Party.isEmpty()) {
         //check if already mapped out and geedout
-        if(tmp!=NULL&&!Is_In_Queue(The_Visited,tmp)){
+        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp)) {
             Search_Party.enqueue(tmp);
             The_Visited.enqueue(tmp);
         }
 
         tmp = Search_Party.pop()->getRight();
 
-        if(tmp!=NULL&&!Is_In_Queue(The_Visited,tmp)){
+        if (tmp != NULL && !Is_In_Queue(The_Visited, tmp)) {
             Search_Party.enqueue(tmp);
             The_Visited.enqueue(tmp);
         }
         tmp = Search_Party.peek();
-        if(tmp == NULL){
+        if (tmp == NULL) {
             continue;
         }
-        else{
+        else {
             tmp = tmp->getLeft();
         }
 
@@ -675,10 +678,10 @@ Queue<node*> DFS_Visited(node* root){
 
 }
 
-int return_min(Queue<int> BB){
-    int min  = BB.peek();
-    for(int i = 0; i<BB.size; i++){
-        if(min>BB.arr[i]&&BB.arr[i]!=0){
+int return_min(Queue<int> BB) {
+    int min = BB.peek();
+    for (int i = 0; i < BB.size; i++) {
+        if (min > BB.arr[i] && BB.arr[i] != 0) {
             min = BB.arr[i];
         }
 
@@ -688,41 +691,41 @@ int return_min(Queue<int> BB){
 }
 
 
-struct OutBox{
+struct OutBox {
     int cost;
     std::string bintree;
 
-    OutBox(){
+    OutBox() {
         this->cost = NULL;
         bintree = "";
     }
-    OutBox(int LeBron , std::string KOBE){
+    OutBox(int LeBron, std::string KOBE) {
         this->cost = LeBron;
         this->bintree = KOBE;
     }
-    void PrintBox(){
-        std::cout<<"MIN COST"<<std::endl;
-        std::cout<<this->cost<<std::endl;
-        std::cout<<"BIN TREE IS"<<std::endl;
+    void PrintBox() {
+        std::cout << "MIN COST" << std::endl;
+        std::cout << this->cost << std::endl;
+        std::cout << "BIN TREE IS" << std::endl;
     }
 };
 
 
-int min_cost(node* root){
-    Queue<int> Quavo =  Queue<int>();
+int min_cost(node* root) {
+    Queue<int> Quavo = Queue<int>();
 
 
-    if(root == NULL){
+    if (root == NULL) {
 
         return 0;
     }
     //INPUT
-    if(root->getINPUT()){
+    if (root->getINPUT()) {
 
         return 0;
     }
 
-    if(root->getRight() == NULL) {
+    if (root->getRight() == NULL) {
         //NOT
         if (root->getNOT() && root->getLeft() == NULL) {
 
@@ -746,10 +749,10 @@ int min_cost(node* root){
         //AOI21
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNAND() &&
             root->getLeft()->getRight()->getNOT()) {
-            std::cout<<"AO121 CALLED"<<std::endl;
+            std::cout << "AO121 CALLED" << std::endl;
             Quavo.enqueue(7 + min_cost(root->getLeft()->getLeft()->getLeft()) +
-                          min_cost(root->getLeft()->getLeft()->getRight())
-                          + min_cost(root->getLeft()->getRight()->getLeft()));
+                min_cost(root->getLeft()->getLeft()->getRight())
+                + min_cost(root->getLeft()->getRight()->getLeft()));
         }
 
         //A0I22
@@ -757,17 +760,18 @@ int min_cost(node* root){
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNAND() &&
             root->getLeft()->getRight()->getNAND()) {
             Quavo.enqueue(7 +
-                          min_cost(root->getLeft()->getLeft()->getLeft()) +
-                          min_cost(root->getLeft()->getLeft()->getRight()) +
-                          min_cost(root->getLeft()->getRight()->getLeft()) +
-                          min_cost(root->getLeft()->getRight()->getLeft())
+                min_cost(root->getLeft()->getLeft()->getLeft()) +
+                min_cost(root->getLeft()->getLeft()->getRight()) +
+                min_cost(root->getLeft()->getRight()->getLeft()) +
+                min_cost(root->getLeft()->getRight()->getLeft())
             );
 
 
         }
 
 
-    }else {
+    }
+    else {
         //OR2
         if (root->getNAND() && root->getLeft()->getNOT() && root->getRight()->getNOT()) {
             Quavo.enqueue(4 + min_cost(root->getLeft()->getLeft()) + min_cost(root->getRight()->getLeft()));
@@ -780,71 +784,71 @@ int min_cost(node* root){
             Quavo.enqueue(3 + min_cost(root->getLeft()) + min_cost(root->getRight()));
         }
     }
-        for(int i = 0; i<Quavo.size; i++){
-            std::cout<<Quavo.arr[i]<<" ";
-        }
-        std::cout<<std::endl;
-        std::cout<<"MIN IN THIS LEVEL";
-        std::cout<<return_min(Quavo)<<std::endl;
-        return return_min(Quavo);
+    for (int i = 0; i < Quavo.size; i++) {
+        std::cout << Quavo.arr[i] << " ";
     }
+    std::cout << std::endl;
+    std::cout << "MIN IN THIS LEVEL";
+    std::cout << return_min(Quavo) << std::endl;
+    return return_min(Quavo);
+}
 
-OutBox min_cost_box (node* root){
-    Queue<OutBox> Quavo =  Queue<OutBox>();
+OutBox min_cost_box(node* root) {
+    Queue<OutBox> Quavo = Queue<OutBox>();
 
 
-    if(root == NULL){
-        OutBox O = OutBox(0,"INPUT ");
+    if (root == NULL) {
+        OutBox O = OutBox(0, "INPUT ");
         return O;
     }
     //INPUT
-    if(root->getINPUT()){
+    if (root->getINPUT()) {
 
-        OutBox O = OutBox(0,"INPUT ");
+        OutBox O = OutBox(0, "INPUT ");
         return O;
     }
 
-    if(root->getRight() == NULL) {
+    if (root->getRight() == NULL) {
         //NOT
         if (root->getNOT() && root->getLeft() == NULL) {
-            OutBox O = OutBox(2,"NOT ");
+            OutBox O = OutBox(2, "NOT ");
             return O;
         }
 
         if (root->getNOT()) {
 
-            Quavo.enqueue(OutBox(2+min_cost_box(root->getLeft()).cost,
-                                 "NOT "+min_cost_box(root->getLeft()).bintree));
+            Quavo.enqueue(OutBox(2 + min_cost_box(root->getLeft()).cost,
+                "NOT " + min_cost_box(root->getLeft()).bintree));
         }
 
         //AND2
         if (root->getNOT() && root->getLeft()->getNAND()) {
             Quavo.enqueue(OutBox(4 + min_cost_box(root->getLeft()->getLeft()).cost
-            + min_cost_box(root->getLeft()->getRight()).cost,"AND2"
-            + min_cost_box(root->getLeft()->getLeft()).bintree
-            +min_cost_box(root->getLeft()->getRight()).bintree));
+                + min_cost_box(root->getLeft()->getRight()).cost, "AND2"
+                + min_cost_box(root->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getRight()).bintree));
         }
         //NOR2
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNOT() &&
             root->getLeft()->getRight()->getNOT()) {
             Quavo.enqueue(OutBox(
-                    6
-                    + min_cost_box(root->getLeft()->getLeft()).cost
-                    + min_cost_box(root->getLeft()->getRight()).cost
-                    ,"NOR2 " + min_cost_box(root->getLeft()->getLeft()).bintree
-                    + min_cost_box(root->getLeft()->getRight()).bintree));
+                6
+                + min_cost_box(root->getLeft()->getLeft()).cost
+                + min_cost_box(root->getLeft()->getRight()).cost
+                , "NOR2 " + min_cost_box(root->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getRight()).bintree));
         }
 
         //AOI21
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNAND() &&
             root->getLeft()->getRight()->getNOT()) {
-            std::cout<<"AO121 CALLED"<<std::endl;
+            std::cout << "AO121 CALLED" << std::endl;
             Quavo.enqueue(OutBox(7 + min_cost_box(root->getLeft()->getLeft()->getLeft()).cost
-            +min_cost_box(root->getLeft()->getLeft()->getRight()).cost
-            + min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
-                                 "A0I21 " + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
-                                 +min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree));
+                + min_cost_box(root->getLeft()->getLeft()->getRight()).cost
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
+                "A0I21 " + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree));
         }
 
         //A0I22
@@ -852,26 +856,27 @@ OutBox min_cost_box (node* root){
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNAND() &&
             root->getLeft()->getRight()->getNAND()) {
             Quavo.enqueue(OutBox(7 +
-                                 min_cost_box(root->getLeft()->getLeft()->getLeft()).cost +
-                                 min_cost_box(root->getLeft()->getLeft()->getRight()).cost +
-                                 min_cost_box(root->getLeft()->getRight()->getLeft()).cost +
-                                 min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
-                                 "A0I22 "
-                                 + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
-                                 + min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree
+                min_cost_box(root->getLeft()->getLeft()->getLeft()).cost +
+                min_cost_box(root->getLeft()->getLeft()->getRight()).cost +
+                min_cost_box(root->getLeft()->getRight()->getLeft()).cost +
+                min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
+                "A0I22 "
+                + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree
             ));;
 
 
         }
 
 
-    }else {
+    }
+    else {
         //OR2
         if (root->getNAND() && root->getLeft()->getNOT() && root->getRight()->getNOT()) {
             Quavo.enqueue(OutBox(4 + min_cost_box(root->getLeft()->getLeft()).cost + min_cost_box(root->getRight()->getLeft()).cost,
-                                 "OR2 " + min_cost_box(root->getLeft()->getLeft()).bintree + min_cost_box(root->getRight()->getLeft()).bintree));
+                "OR2 " + min_cost_box(root->getLeft()->getLeft()).bintree + min_cost_box(root->getRight()->getLeft()).bintree));
         }
 
 
@@ -879,51 +884,51 @@ OutBox min_cost_box (node* root){
         //NAND
         if (root->getNAND()) {
             Quavo.enqueue(OutBox(3 + min_cost_box(root->getLeft()).cost + min_cost_box(root->getRight()).cost,
-                                 "NAND " + min_cost_box(root->getLeft()).bintree + min_cost_box(root->getRight()).bintree));
+                "NAND " + min_cost_box(root->getLeft()).bintree + min_cost_box(root->getRight()).bintree));
         }
     }
     int min = Quavo.arr[0].cost;
     int j = 0;
-    for(int i = 0; i<Quavo.size; i++){
-        if(min>Quavo.arr[i].cost) {
+    for (int i = 0; i < Quavo.size; i++) {
+        if (min > Quavo.arr[i].cost) {
             min = Quavo.arr[i].cost;
-                    j = i;
+            j = i;
         }
 
     }
-    std::cout<<std::endl;
-    std::cout<<"MIN IN THIS LEVEL";
-    std::cout<<Quavo.arr[j].cost<<std::endl;
-    std::cout<<"FINAL TREE"<<Quavo.arr[j+1].bintree<<std::endl;
+    std::cout << std::endl;
+    std::cout << "MIN IN THIS LEVEL";
+    std::cout << Quavo.arr[j].cost << std::endl;
+    std::cout << "FINAL TREE" << Quavo.arr[j + 1].bintree << std::endl;
     return Quavo.arr[j];
 }
 
 
 
 
-std::string string_decomposed_tree(node* root){
+std::string string_decomposed_tree(node* root) {
     Queue<node*> Visited = DFS_Visited(root);
     std::string out = "";
     //True if NOT
     //False if NAND
-    for(int i = 0; i< Visited.size; i++){
-        if(Visited.arr[i]->getNOT())
-            out+="2";
-        else if(Visited.arr[i]->getNAND()){
+    for (int i = 0; i < Visited.size; i++) {
+        if (Visited.arr[i]->getNOT())
+            out += "2";
+        else if (Visited.arr[i]->getNAND()) {
             out += "3";
         }
-        else{
-            out+="0";
+        else {
+            out += "0";
         }
     }
     return out;
 }
 
 
-Queue<std::string> RecursiveDecomposedTrees(node* root){
+Queue<std::string> RecursiveDecomposedTrees(node* root) {
     Queue<node*> Visited = DFS_Visited(root);
     Queue<std::string> output = Queue<std::string >();
-    while (!Visited.isEmpty()){
+    while (!Visited.isEmpty()) {
         output.enqueue(string_decomposed_tree(Visited.pop()));
     }
 
@@ -941,9 +946,9 @@ Queue<std::string> RecursiveDecomposedTrees(node* root){
 
 // THE READING PROCESS
 //1130/23
-int Queue_index_of(Queue<std::string> P , std::string& Q){
-    for(int i = 0; i<P.size; i++){
-        if(P.arr[i] == Q){
+int Queue_index_of(Queue<std::string> P, std::string& Q) {
+    for (int i = 0; i < P.size; i++) {
+        if (P.arr[i] == Q) {
             return i;
         }
     }
@@ -951,46 +956,46 @@ int Queue_index_of(Queue<std::string> P , std::string& Q){
     return -1;
 }
 
-std::string Remove_WhiteSpace (const std::string& D){
-    std::string OUT ="";
-    for(int i = 0; i<D.length(); i++){
-        if(D.substr(i,1)!=" "){
-            OUT+=D.substr(i,1);
+std::string Remove_WhiteSpace(const std::string& D) {
+    std::string OUT = "";
+    for (int i = 0; i < D.length(); i++) {
+        if (D.substr(i, 1) != " ") {
+            OUT += D.substr(i, 1);
         }
     }
     return OUT;
 }
 //<name,operation,var1,var2>
-Queue<std::string> Process_Equation(const std::string& E){
+Queue<std::string> Process_Equation(const std::string& E) {
 
     std::string MOD = Remove_WhiteSpace(E);
     int spot_of_incidence;
     Queue<std::string> OUT = Queue<std::string>();
     //Remove Equals Sign
-    for(int i = 0; i<MOD.size(); i++){
-        if(MOD.substr(i,1) == "="){
+    for (int i = 0; i < MOD.size(); i++) {
+        if (MOD.substr(i, 1) == "=") {
             spot_of_incidence = i;
         }
     }
 
-    if(MOD.substr(0,spot_of_incidence).find("t",std::string::npos)){
-        OUT.enqueue(MOD.substr(0,spot_of_incidence));
+    if (MOD.substr(0, spot_of_incidence).find("t", std::string::npos)) {
+        OUT.enqueue(MOD.substr(0, spot_of_incidence));
     }
-    else{
-        OUT.enqueue(MOD.substr(0,1));
+    else {
+        OUT.enqueue(MOD.substr(0, 1));
     }
 
     MOD = MOD.substr(spot_of_incidence + 1);
 
-    if(MOD.substr(0,1) == "A"){
+    if (MOD.substr(0, 1) == "A") {
         OUT.enqueue("AND");
         MOD = MOD.substr(3);
     }
-    else if (MOD.substr(0,1) == "O"){
+    else if (MOD.substr(0, 1) == "O") {
         OUT.enqueue("OR");
         MOD = MOD.substr(2);
     }
-    else{
+    else {
         OUT.enqueue("NOT");
         MOD = MOD.substr(3);
     }
@@ -998,12 +1003,12 @@ Queue<std::string> Process_Equation(const std::string& E){
     int ascii_value;
     unsigned char x = MOD[0];
     ascii_value = static_cast<int>(x);
-    if( (ascii_value>96 && ascii_value<116) || (ascii_value>116 && ascii_value < 122)){
-        OUT.enqueue(MOD.substr(0,1));
+    if ((ascii_value > 96 && ascii_value < 116) || (ascii_value > 116 && ascii_value < 122)) {
+        OUT.enqueue(MOD.substr(0, 1));
         MOD = MOD.substr(1);
     }
-    else{
-        OUT.enqueue(MOD.substr(0,2));
+    else {
+        OUT.enqueue(MOD.substr(0, 2));
         MOD = MOD.substr(2);
     }
     OUT.enqueue(MOD);
@@ -1013,38 +1018,26 @@ Queue<std::string> Process_Equation(const std::string& E){
 
 }
 
-std::string Process_Equation_Clone_Clone(const std::string &E){
-    std::string MOD = Remove_WhiteSpace(E);
-    int spot_of_incidence;
-    for(int i = 0; i<MOD.size(); i++){
-        if(MOD.substr(i,1) == "="){
-            spot_of_incidence = i;
-            break;
-        }
-    }
 
 
-
-}
-
-Queue<std::string> Process_Equation_Clone(const std::string &E){
+Queue<std::string> Process_Equation_Clone(const std::string& E) {
 
     std::string MOD = Remove_WhiteSpace(E);
     int spot_of_incidence;
     Queue<std::string> OUT = Queue<std::string>();
     //Remove Equals Sign
-    for(int i = 0; i<MOD.size(); i++){
-        if(MOD.substr(i,1) == "="){
+    for (int i = 0; i < MOD.size(); i++) {
+        if (MOD.substr(i, 1) == "=") {
             spot_of_incidence = i;
             break;
         }
     }
 
-    if(MOD.substr(0,spot_of_incidence).find("t",std::string::npos)){
-        OUT.enqueue(MOD.substr(0,spot_of_incidence));
+    if (MOD.substr(0, spot_of_incidence).find("t", std::string::npos)) {
+        OUT.enqueue(MOD.substr(0, spot_of_incidence));
     }
-    else{
-        OUT.enqueue(MOD.substr(0,1));
+    else {
+        OUT.enqueue(MOD.substr(0, 1));
     }
 
     MOD = MOD.substr(spot_of_incidence + 1);
@@ -1052,10 +1045,12 @@ Queue<std::string> Process_Equation_Clone(const std::string &E){
         if (MOD.substr(0, 1) == "A") {
             OUT.enqueue("AND");
             MOD = MOD.substr(3);
-        } else if (MOD.substr(0, 1) == "O") {
+        }
+        else if (MOD.substr(0, 1) == "O") {
             OUT.enqueue("OR");
             MOD = MOD.substr(2);
-        } else if(MOD.substr(0,1) == "N") {
+        }
+        else if (MOD.substr(0, 1) == "N") {
             OUT.enqueue("NOT");
             MOD = MOD.substr(3);
         }
@@ -1067,7 +1062,8 @@ Queue<std::string> Process_Equation_Clone(const std::string &E){
         if ((ascii_value > 96 && ascii_value < 116) || (ascii_value > 116 && ascii_value < 122)) {
             OUT.enqueue(MOD.substr(0, 1));
             MOD = MOD.substr(1);
-        } else if(MOD.substr(0,1) == "t"){
+        }
+        else if (MOD.substr(0, 1) == "t") {
             OUT.enqueue(MOD.substr(0, 2));
             MOD = MOD.substr(2);
         }
@@ -1082,31 +1078,31 @@ Queue<std::string> Process_Equation_Clone(const std::string &E){
 
 
 
-void Print_String_Queue(Queue<std::string> A){
-    std::cout<<"[-BEGINNING->";
-    for(int i = 0; i<A.size; i++){
-        std::cout<<A.arr[i]<<",";
+void Print_String_Queue(Queue<std::string> A) {
+    std::cout << "[-BEGINNING->";
+    for (int i = 0; i < A.size; i++) {
+        std::cout << A.arr[i] << ",";
     }
-    std::cout<<"<---END-----]";
-    std::cout<<std::endl;
+    std::cout << "<---END-----]";
+    std::cout << std::endl;
 }
 
-void Print_String_Queue_of_Queues(Queue<Queue<std::string>> Q){
-    for(int i = 0; i <Q.size; i++){
-        for(int j = 0; j<Q.arr[i].size;j++){
-            std::cout<<Q.arr[i].arr[j]<<",";
+void Print_String_Queue_of_Queues(Queue<Queue<std::string>> Q) {
+    for (int i = 0; i < Q.size; i++) {
+        for (int j = 0; j < Q.arr[i].size; j++) {
+            std::cout << Q.arr[i].arr[j] << ",";
         }
-        std::cout<<std::endl;
+        std::cout << std::endl;
     }
 }
 
 
 
-int read_inputs(std::ifstream &_file){
+int read_inputs(std::ifstream& _file) {
     std::string line;
     int out = 0;
-    if(!_file.is_open()) {
-        std::cout<<"file problems"<<std::endl;
+    if (!_file.is_open()) {
+        std::cout << "file problems" << std::endl;
         return 0;
     }
     while (std::getline(_file, line)) {
@@ -1117,8 +1113,8 @@ int read_inputs(std::ifstream &_file){
             std::cout << "Found the phrase 'Output'. Stopping reading lines." << std::endl;
             break;
         }
-        else{
-            out+=1;
+        else {
+            out += 1;
         }
 
     }
@@ -1129,17 +1125,17 @@ int read_inputs(std::ifstream &_file){
 }
 
 
-Queue<bool> create_Inputs(int length){
+Queue<bool> create_Inputs(int length) {
     Queue<bool> out;
-    std::cout<<"Write out "<<length<<" boolean inputs in the form 111000011010"<<std::endl;
+    std::cout << "Write out " << length << " boolean inputs in the form 111000011010" << std::endl;
     std::string line;
-   std::getline(std::cin,line);
-   int tmp;
-    for(int i = 0; i<length; i++){
-        if(line.substr(i,1) == "0"){
+    std::getline(std::cin, line);
+    int tmp;
+    for (int i = 0; i < length; i++) {
+        if (line.substr(i, 1) == "0") {
             out.enqueue(false);
         }
-        else{
+        else {
             out.enqueue(true);
         }
 
@@ -1150,54 +1146,54 @@ Queue<bool> create_Inputs(int length){
 
 
 }
-int ascii_to_index(char A){
+int ascii_to_index(char A) {
     return static_cast<int> (A) - 97;
 }
 
-int t_index_extraction(std::string c,int inputs){
-    return (inputs-1) + std::stoi(c.substr(1));
+int t_index_extraction(std::string c, int inputs) {
+    return (inputs - 1) + std::stoi(c.substr(1));
 }
 
-int index_extractions(std::string S,int inputs){
-    if(S.length()<2){
+int index_extractions(std::string S, int inputs) {
+    if (S.length() < 2) {
         return ascii_to_index(S[0]);
     }
-    else{
-        return t_index_extraction(S,inputs);
+    else {
+        return t_index_extraction(S, inputs);
     }
 }
 
 
-node* NOT1(node* a){
-    NOT* parent = new NOT(NULL,a);
+node* NOT1(node* a) {
+    NOT* parent = new NOT(NULL, a);
     a->parent = parent;
     return parent;
 }
 
-Queue<node*> create_Sub_Trees (Queue<Queue<std::string>>orders, int inputs){
+Queue<node*> create_Sub_Trees(Queue<Queue<std::string>>orders, int inputs) {
     Queue<node*> selection = Queue<node*>();
 
-    for(int i = 0; i<inputs; i++){
+    for (int i = 0; i < inputs; i++) {
         selection.enqueue(new INPUT(NULL, true));
     }
 
 
     //orders
 
-    node* tmp;
-    for(int i = 0; i<orders.size; i++){
+    node* tmp = NULL;
+    for (int i = 0; i < orders.size; i++) {
         //WHICH OPERATION
-        if(orders.arr[i].arr[1] == "OR"){
-            tmp = OR(selection.arr[index_extractions(orders.arr[i].arr[2],inputs)],
-                     selection.arr[index_extractions(orders.arr[i].arr[3],inputs)]);
+        if (orders.arr[i].arr[1] == "OR") {
+            tmp = OR(selection.arr[index_extractions(orders.arr[i].arr[2], inputs)],
+                selection.arr[index_extractions(orders.arr[i].arr[3], inputs)]);
         }
-        else if(orders.arr[i].arr[1] == "AND"){
-            tmp = AND(selection.arr[index_extractions(orders.arr[i].arr[2],inputs)],
-                      selection.arr[index_extractions(orders.arr[i].arr[3],inputs)]);
+        else if (orders.arr[i].arr[1] == "AND") {
+            tmp = AND(selection.arr[index_extractions(orders.arr[i].arr[2], inputs)],
+                selection.arr[index_extractions(orders.arr[i].arr[3], inputs)]);
         }
-        else if(orders.arr[i].arr[1] == "NOT")
+        else if (orders.arr[i].arr[1] == "NOT")
         {
-            tmp = NOT1(selection.arr[index_extractions(orders.arr[i].arr[2],inputs)]);
+            tmp = NOT1(selection.arr[index_extractions(orders.arr[i].arr[2], inputs)]);
 
         }
         selection.enqueue(tmp);
@@ -1210,10 +1206,10 @@ Queue<node*> create_Sub_Trees (Queue<Queue<std::string>>orders, int inputs){
 
 
 
-Queue<node*> create_Sub_Trees_clone(Queue<Queue<std::string>>orders, int inputs){
+Queue<node*> create_Sub_Trees_clone(Queue<Queue<std::string>>orders, int inputs) {
 
     Queue<node*> selection = Queue<node*>();
-    for(int i = 0; i<inputs; i++){
+    for (int i = 0; i < inputs; i++) {
         selection.enqueue(new INPUT(NULL, true));
     }
 
@@ -1226,56 +1222,56 @@ Queue<node*> create_Sub_Trees_clone(Queue<Queue<std::string>>orders, int inputs)
     int index_2 = 0;
     int j = 1;
     Queue<node*> PostFix = Queue<node*>();
-    for(int i = 0; i<orders.size; i++){
-    //for every equation
-       while(j<orders.arr[i].size) {
-           //Last element up to then
-           std::string tb_evaled = orders.arr[i].arr[orders.arr[i].size-j];
-           //orders.arr[i] = "F , OR , t1 , and , t2 , t3"
-           //orders.arr[i] = "F, NOT , AND , a , OR , b , c
-            //If it a input
-            if(tb_evaled.size()<3 && tb_evaled!= "OR"){
-               index_2 = index_extractions(tb_evaled,inputs);
-               PostFix.enqueue(selection.arr[index_2]);
-           }
-           else if(tb_evaled == "OR"){
-               PostFix.enqueue(OR(PostFix.pop_stack(),PostFix.pop_stack()));
-           }
-           else if(tb_evaled == "AND"){
-                PostFix.enqueue(AND(PostFix.pop_stack(),PostFix.pop_stack()));
-           }
-           else if(tb_evaled == "NOT"){
-               PostFix.enqueue(NOT1(PostFix.pop_stack()));
-           }
-           j++;
+    for (int i = 0; i < orders.size; i++) {
+        //for every equation
+        while (j < orders.arr[i].size) {
+            //Last element up to then
+            std::string tb_evaled = orders.arr[i].arr[orders.arr[i].size - j];
+            //orders.arr[i] = "F , OR , t1 , and , t2 , t3"
+            //orders.arr[i] = "F, NOT , AND , a , OR , b , c
+             //If it a input
+            if (tb_evaled.size() < 3 && tb_evaled != "OR") {
+                index_2 = index_extractions(tb_evaled, inputs);
+                PostFix.enqueue(selection.arr[index_2]);
+            }
+            else if (tb_evaled == "OR") {
+                PostFix.enqueue(OR(PostFix.pop_stack(), PostFix.pop_stack()));
+            }
+            else if (tb_evaled == "AND") {
+                PostFix.enqueue(AND(PostFix.pop_stack(), PostFix.pop_stack()));
+            }
+            else if (tb_evaled == "NOT") {
+                PostFix.enqueue(NOT1(PostFix.pop_stack()));
+            }
+            j++;
 
-       }
-       tmp = PostFix.pop();
-       selection.enqueue(tmp);
-       j = 1;
+        }
+        tmp = PostFix.pop();
+        selection.enqueue(tmp);
+        j = 1;
     }
     return selection;
 }
 
 
-Queue<node*> read_inputs_full(std::ifstream &_file){
+Queue<node*> read_inputs_full(std::ifstream& _file) {
     std::string line;
     int out = 0;
-    if(!_file.is_open()) {
-        std::cout<<"file problems"<<std::endl;
+    if (!_file.is_open()) {
+        std::cout << "file problems" << std::endl;
         return {};
     }
     while (std::getline(_file, line)) {
         // Process the line or print it
 
-        if(line == ""){
+        if (line == "") {
             break;
         }
         if (line.find("OUTPUT") != std::string::npos) {
             std::cout << "Found the phrase 'Output'. Stopping reading lines." << std::endl;
             break;
         }
-        else{
+        else {
 
 
             out++;
@@ -1289,10 +1285,10 @@ Queue<node*> read_inputs_full(std::ifstream &_file){
     //ALL EQUATION INFROMATION
     int i = 0;
     while (std::getline(_file, line)) {
-       equation_details.enqueue(Process_Equation_Clone(line));
+        equation_details.enqueue(Process_Equation_Clone(line));
     }
 
-    return create_Sub_Trees_clone(equation_details,out);
+    return create_Sub_Trees_clone(equation_details, out);
 
 
     _file.close();
@@ -1321,15 +1317,15 @@ Queue<node*> read_inputs_full(std::ifstream &_file){
 
 
 
-//END OF THE READING PROCESS
+ //END OF THE READING PROCESS
 
 
 
 
-//CONVERSION ATTEMPTS
-//CONVERSION ENDS
+ //CONVERSION ATTEMPTS
+ //CONVERSION ENDS
 
-//IN CONSOLE 2 REPRESENTS NOT AND 3 REPRESENTS AND
+ //IN CONSOLE 2 REPRESENTS NOT AND 3 REPRESENTS AND
 
 
 
@@ -1337,7 +1333,7 @@ int main() {
 
 
     std::cout << "Hello, World!" << std::endl;
-    std::ifstream _file("Boolean_Netlist.txt");
+    std::ifstream _file("Boolean.netlist.txt");
 
 
     //MOST IMPORTANT FUNCTION |||||||||||||||||||||||||||||||||||||||
@@ -1362,11 +1358,11 @@ int main() {
     //All_String_Decomps(Rod);
 
 
-    for(int i = 0; i<Rod.size;i++) {
-        std::cout<<"Index:|"<<i<<"|";
+    for (int i = 0; i < Rod.size; i++) {
+        std::cout << "Index:|" << i << "|";
         Print_String_Queue(RecursiveDecomposedTrees(Rod.arr[i]));
     }
-    std::cout<<min_cost(Rod.peek_stack())<<std::endl;
-   // min_cost_box(Rod.peek_last());
+    std::cout << min_cost(Rod.peek_stack()) << std::endl;
+    // min_cost_box(Rod.peek_last());
     return 0;
 }
