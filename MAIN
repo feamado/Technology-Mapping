@@ -250,14 +250,14 @@ NAND::NAND(node* parent, node* left, node* right) {
 
 
     this->parent = parent;
-        if ((left->getINPUT() || left->getNOT()) && right->getNAND()) {
-            this->left = right;
-            this->right = left;
-        }
-        else {
-            this->left = left;
-            this->right = right;
-        }
+    if ((left->getINPUT() || left->getNOT()) && right->getNAND()) {
+        this->left = right;
+        this->right = left;
+    }
+    else {
+        this->left = left;
+        this->right = right;
+    }
     this->isNAND = true;
     this->isNOT = false;
     output = !(left->output && right->output);
@@ -709,17 +709,17 @@ struct OutBox {
     }
 };
 
-OutBox min_cost_box (node* root){
+OutBox min_cost_box(node* root) {
 
     Queue<OutBox> Quavo = Queue<OutBox>();
 
-    if(root == NULL){
-        OutBox O = OutBox(0,"INPUT");
+    if (root == NULL) {
+        OutBox O = OutBox(0, "INPUT");
         return O;
     }
 
     if (root->getINPUT()) {
-        OutBox O = OutBox(0,"INPUT");
+        OutBox O = OutBox(0, "INPUT");
         return O;
     }
 
@@ -729,33 +729,33 @@ OutBox min_cost_box (node* root){
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNOT() &&
             root->getLeft()->getRight()->getNOT()) {
             Quavo.enqueue(OutBox(
-                    6
-                    + min_cost_box(root->getLeft()->getLeft()->getLeft()).cost
-                    + min_cost_box(root->getLeft()->getRight()->getLeft()).cost
-                    , "NOR2 " + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
-                      + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree));
+                6
+                + min_cost_box(root->getLeft()->getLeft()->getLeft()).cost
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).cost
+                , "NOR2 " + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree));
 
         }
 
         //NOT
 
         if (root->getNOT() && root->getLeft() == NULL) {
-            OutBox O = OutBox(2,"NOT");
+            OutBox O = OutBox(2, "NOT");
             return O;
         }
 
         if (root->getNOT()) {
             Quavo.enqueue(OutBox(2 + min_cost_box(root->getLeft()).cost,
-                                 "NOT " + min_cost_box(root->getLeft()).bintree));
+                "NOT " + min_cost_box(root->getLeft()).bintree));
         }
 
         //AND2
 
         if (root->getNOT() && root->getLeft()->getNAND()) {
             Quavo.enqueue(OutBox(4 + min_cost_box(root->getLeft()->getLeft()).cost
-                                 + min_cost_box(root->getLeft()->getRight()).cost, "AND2 "
-                                                                                   + min_cost_box(root->getLeft()->getLeft()).bintree
-                                                                                   + min_cost_box(root->getLeft()->getRight()).bintree));
+                + min_cost_box(root->getLeft()->getRight()).cost, "AND2 "
+                + min_cost_box(root->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getRight()).bintree));
         }
 
 
@@ -763,11 +763,11 @@ OutBox min_cost_box (node* root){
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNAND() &&
             root->getLeft()->getRight()->getNOT()) {
             Quavo.enqueue(OutBox(7 + min_cost_box(root->getLeft()->getLeft()->getLeft()).cost
-                                 + min_cost_box(root->getLeft()->getLeft()->getRight()).cost
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
-                                 "A0I21 " + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
-                                 + min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree));
+                + min_cost_box(root->getLeft()->getLeft()->getRight()).cost
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
+                "A0I21 " + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree));
         }
 
         //A0I22
@@ -775,15 +775,15 @@ OutBox min_cost_box (node* root){
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNAND() &&
             root->getLeft()->getRight()->getNAND()) {
             Quavo.enqueue(OutBox(7 +
-                                 min_cost_box(root->getLeft()->getLeft()->getLeft()).cost +
-                                 min_cost_box(root->getLeft()->getLeft()->getRight()).cost +
-                                 min_cost_box(root->getLeft()->getRight()->getLeft()).cost +
-                                 min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
-                                 "A0I22 "
-                                 + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
-                                 + min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree
+                min_cost_box(root->getLeft()->getLeft()->getLeft()).cost +
+                min_cost_box(root->getLeft()->getLeft()->getRight()).cost +
+                min_cost_box(root->getLeft()->getRight()->getLeft()).cost +
+                min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
+                "A0I22 "
+                + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree
             ));
 
 
@@ -795,11 +795,11 @@ OutBox min_cost_box (node* root){
         //OR2
         if (root->getNAND() && root->getLeft()->getNOT() && root->getRight()->getNOT()) {
             Quavo.enqueue(OutBox(4
-                                 + min_cost_box(root->getLeft()->getLeft()).cost
-                                 + min_cost_box(root->getRight()->getLeft()).cost,
-                                 "OR2 "
-                                 +min_cost_box(root->getLeft()->getLeft()).bintree
-                                 + min_cost_box(root->getRight()->getLeft()).bintree));
+                + min_cost_box(root->getLeft()->getLeft()).cost
+                + min_cost_box(root->getRight()->getLeft()).cost,
+                "OR2 "
+                + min_cost_box(root->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getRight()->getLeft()).bintree));
         }
 
 
@@ -807,9 +807,9 @@ OutBox min_cost_box (node* root){
         //NAND
         if (root->getNAND()) {
             Quavo.enqueue(OutBox(3 + min_cost_box(root->getLeft()).cost + min_cost_box(root->getRight()).cost,
-                                 "NAND "
-                                 + min_cost_box(root->getLeft()).bintree
-                                 + min_cost_box(root->getRight()).bintree));
+                "NAND "
+                + min_cost_box(root->getLeft()).bintree
+                + min_cost_box(root->getRight()).bintree));
         }
 
 
@@ -877,8 +877,8 @@ int min_cost(node* root) {
             root->getLeft()->getRight()->getNOT()) {
             std::cout << "AO121 CALLED" << std::endl;
             Quavo.enqueue(7 + min_cost(root->getLeft()->getLeft()->getLeft()) +
-                          min_cost(root->getLeft()->getLeft()->getRight())
-                          + min_cost(root->getLeft()->getRight()->getLeft()));
+                min_cost(root->getLeft()->getLeft()->getRight())
+                + min_cost(root->getLeft()->getRight()->getLeft()));
         }
 
         //A0I22
@@ -886,10 +886,10 @@ int min_cost(node* root) {
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNAND() &&
             root->getLeft()->getRight()->getNAND()) {
             Quavo.enqueue(7 +
-                          min_cost(root->getLeft()->getLeft()->getLeft()) +
-                          min_cost(root->getLeft()->getLeft()->getRight()) +
-                          min_cost(root->getLeft()->getRight()->getLeft()) +
-                          min_cost(root->getLeft()->getRight()->getLeft())
+                min_cost(root->getLeft()->getLeft()->getLeft()) +
+                min_cost(root->getLeft()->getLeft()->getRight()) +
+                min_cost(root->getLeft()->getRight()->getLeft()) +
+                min_cost(root->getLeft()->getRight()->getLeft())
             );
 
 
@@ -1300,11 +1300,11 @@ Queue<node*> create_Sub_Trees(Queue<Queue<std::string>>orders, int inputs) {
         //WHICH OPERATION
         if (orders.arr[i].arr[1] == "OR") {
             tmp = OR(selection.arr[index_extractions(orders.arr[i].arr[2], inputs)],
-                     selection.arr[index_extractions(orders.arr[i].arr[3], inputs)]);
+                selection.arr[index_extractions(orders.arr[i].arr[3], inputs)]);
         }
         else if (orders.arr[i].arr[1] == "AND") {
             tmp = AND(selection.arr[index_extractions(orders.arr[i].arr[2], inputs)],
-                      selection.arr[index_extractions(orders.arr[i].arr[3], inputs)]);
+                selection.arr[index_extractions(orders.arr[i].arr[3], inputs)]);
         }
         else if (orders.arr[i].arr[1] == "NOT")
         {
@@ -1432,15 +1432,15 @@ Queue<node*> read_inputs_full(std::ifstream& _file) {
 
 
 
-//END OF THE READING PROCESS
+ //END OF THE READING PROCESS
 
 
 
 
-//CONVERSION ATTEMPTS
-//CONVERSION ENDS
+ //CONVERSION ATTEMPTS
+ //CONVERSION ENDS
 
-//IN CONSOLE 2 REPRESENTS NOT AND 3 REPRESENTS AND
+ //IN CONSOLE 2 REPRESENTS NOT AND 3 REPRESENTS AND
 
 
 
@@ -1448,7 +1448,7 @@ int main() {
 
 
     std::cout << "Hello, World!" << std::endl;
-    std::ifstream _file("buex2.txt");
+    std::ifstream _file("Boolean.netlist.txt");
 
 
     //MOST IMPORTANT FUNCTION |||||||||||||||||||||||||||||||||||||||
@@ -1479,7 +1479,7 @@ int main() {
     }
     std::cout << min_cost(Rod.peek_stack()) << std::endl;
     min_cost_box(Rod.peek_stack());
-    std::cout<<min_cost_box(Rod.peek_stack()).cost<<std::endl;
+    std::cout << min_cost_box(Rod.peek_stack()).cost << std::endl;
     // min_cost_box(Rod.peek_last());
     return 0;
 }
