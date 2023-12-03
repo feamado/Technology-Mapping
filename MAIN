@@ -250,7 +250,7 @@ NAND::NAND(node* parent, node* left, node* right) {
 
 
     this->parent = parent;
-
+    if()
     if ((left->getINPUT() || left->getNOT()) && right->getNAND()) {
         this->left = right;
         this->right = left;
@@ -829,7 +829,7 @@ OutBox min_cost_box (node* root){
     std::cout << std::endl;
     std::cout << "MIN IN THIS LEVEL";
     std::cout << Quavo.arr[j].cost << std::endl;
-    std::cout << "FINAL TREE" << Quavo.arr[j + 1].bintree << std::endl;
+    std::cout << "FINAL TREE " << Quavo.arr[j].bintree << std::endl;
     return Quavo.arr[j];
 
 
