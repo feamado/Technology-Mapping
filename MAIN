@@ -472,7 +472,6 @@ bool Is_In_Queue(Queue<T> Q, T item) {
 }
 
 
-// 0 Casting Spells Le-Epic Polymorphism
 
 Queue<node*> DFS_Visited(node* root) {
     Queue<node*> Search_Party = Queue<node*>();
@@ -534,9 +533,9 @@ struct OutBox {
         this->cost = NULL;
         bintree = "";
     }
-    OutBox(int LeBron, std::string KOBE) {
-        this->cost = LeBron;
-        this->bintree = KOBE;
+    OutBox(int COST, std::string BINTREE) {
+        this->cost = COST;
+        this->bintree = BINTREE;
     }
     void PrintBox() {
         std::cout << "MIN COST" << std::endl;
@@ -1453,7 +1452,7 @@ void read_inputs_to_the_full(std::ifstream& _file) {
 
 
     for(int i = 0; i<in; i++){
-        std::cout<<"Input "<<i+1<<":"<<std::endl;
+        std::cout<<"Output Netlist "<<in-i<<":"<<std::endl;
         std::cout<<"Minimum cost: ";
         std::cout<<min_cost_box(L.peek_stack()).cost<<std::endl;
         Print_Out_Netlist(ProcessBinaryTreeIntoQueue(min_cost_box(L.peek_stack()).bintree));
@@ -1474,7 +1473,6 @@ int main() {
     std::string filename;
     std::string condition;
     while(run) {
-        std::cout << "Hello, World!" << std::endl;
         std::cout << "Welcome to the Technology Mapping Program:" << std::endl;
         std::cout << "What file would you like to read today????" << std::endl;
         std::cout<<"File name: ";
@@ -1488,5 +1486,6 @@ int main() {
             run = false;
         }
     }
+
     return 0;
 }
