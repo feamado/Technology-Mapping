@@ -1,0 +1,10 @@
+a INPUT
+b INPUT
+c INPUT
+Z OUTPUT
+G OUTPUT
+t1 = OR a b
+t2 = NOT c
+t3 = AND t1 t2
+Z = NOT t3
+G = NOT t2
