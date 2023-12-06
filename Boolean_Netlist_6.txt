@@ -1,0 +1,17 @@
+a INPUT
+b INPUT
+c INPUT
+d INPUT
+e INPUT
+f INPUT
+g INPUT
+h INPUT
+F OUTPUT
+G OUTPUT
+t1 = OR a AND c b
+t2 = OR d e
+t3 = OR d AND a b
+t4 = OR AND t1 t2 AND f g
+t5 = OR AND t4 h AND t2 t3
+F = t5
+G = t4
