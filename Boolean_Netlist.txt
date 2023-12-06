@@ -1,0 +1,11 @@
+a INPUT
+b INPUT
+c INPUT
+d INPUT
+Z OUTPUT
+t1 = NOT a
+t2 = NOT AND b c
+t3 = NOT AND t1 t2
+t4 = NOT d
+t5 = NOT AND t4 t3
+Z = NOT t5
