@@ -250,14 +250,14 @@ NAND::NAND(node* parent, node* left, node* right) {
 
 
     this->parent = parent;
-        if ((left->getINPUT() || left->getNOT()) && right->getNAND()) {
-            this->left = right;
-            this->right = left;
-        }
-        else {
-            this->left = left;
-            this->right = right;
-        }
+    if ((left->getINPUT() || left->getNOT()) && right->getNAND()) {
+        this->left = right;
+        this->right = left;
+    }
+    else {
+        this->left = left;
+        this->right = right;
+    }
     this->isNAND = true;
     this->isNOT = false;
     output = !(left->output && right->output);
@@ -472,6 +472,7 @@ bool Is_In_Queue(Queue<T> Q, T item) {
 }
 
 
+// 0 Casting Spells Le-Epic Polymorphism
 
 Queue<node*> DFS_Visited(node* root) {
     Queue<node*> Search_Party = Queue<node*>();
@@ -533,9 +534,9 @@ struct OutBox {
         this->cost = NULL;
         bintree = "";
     }
-    OutBox(int COST, std::string BINTREE) {
-        this->cost = COST;
-        this->bintree = BINTREE;
+    OutBox(int LeBron, std::string KOBE) {
+        this->cost = LeBron;
+        this->bintree = KOBE;
     }
     void PrintBox() {
         std::cout << "MIN COST" << std::endl;
@@ -544,17 +545,17 @@ struct OutBox {
     }
 };
 
-OutBox min_cost_box (node* root){
+OutBox min_cost_box(node* root) {
 
     Queue<OutBox> Quavo = Queue<OutBox>();
 
-    if(root == NULL){
-        OutBox O = OutBox(0,"INPUT");
+    if (root == NULL) {
+        OutBox O = OutBox(0, "INPUT");
         return O;
     }
 
     if (root->getINPUT()) {
-        OutBox O = OutBox(0,"INPUT");
+        OutBox O = OutBox(0, "INPUT");
         return O;
     }
 
@@ -564,33 +565,33 @@ OutBox min_cost_box (node* root){
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNOT() &&
             root->getLeft()->getRight()->getNOT()) {
             Quavo.enqueue(OutBox(
-                    6
-                    + min_cost_box(root->getLeft()->getLeft()->getLeft()).cost
-                    + min_cost_box(root->getLeft()->getRight()->getLeft()).cost
-                    , "NOR2" + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
-                      + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree));
+                6
+                + min_cost_box(root->getLeft()->getLeft()->getLeft()).cost
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).cost
+                , "NOR2" + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree));
 
         }
 
         //NOT
 
         if (root->getNOT() && root->getLeft() == NULL) {
-            OutBox O = OutBox(2,"NOT1");
+            OutBox O = OutBox(2, "NOT1");
             return O;
         }
 
         if (root->getNOT()) {
             Quavo.enqueue(OutBox(2 + min_cost_box(root->getLeft()).cost,
-                                 "NOT1" + min_cost_box(root->getLeft()).bintree));
+                "NOT1" + min_cost_box(root->getLeft()).bintree));
         }
 
         //AND2
 
         if (root->getNOT() && root->getLeft()->getNAND()) {
             Quavo.enqueue(OutBox(4 + min_cost_box(root->getLeft()->getLeft()).cost
-                                 + min_cost_box(root->getLeft()->getRight()).cost, "AND2"
-                                                                                   + min_cost_box(root->getLeft()->getLeft()).bintree
-                                                                                   + min_cost_box(root->getLeft()->getRight()).bintree));
+                + min_cost_box(root->getLeft()->getRight()).cost, "AND2"
+                + min_cost_box(root->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getRight()).bintree));
         }
 
 
@@ -598,11 +599,11 @@ OutBox min_cost_box (node* root){
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNAND() &&
             root->getLeft()->getRight()->getNOT()) {
             Quavo.enqueue(OutBox(7 + min_cost_box(root->getLeft()->getLeft()->getLeft()).cost
-                                 + min_cost_box(root->getLeft()->getLeft()->getRight()).cost
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
-                                 "A0I21" + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
-                                 + min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree));
+                + min_cost_box(root->getLeft()->getLeft()->getRight()).cost
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
+                "A0I21" + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree));
         }
 
         //A0I22
@@ -610,15 +611,15 @@ OutBox min_cost_box (node* root){
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNAND() &&
             root->getLeft()->getRight()->getNAND()) {
             Quavo.enqueue(OutBox(7 +
-                                 min_cost_box(root->getLeft()->getLeft()->getLeft()).cost +
-                                 min_cost_box(root->getLeft()->getLeft()->getRight()).cost +
-                                 min_cost_box(root->getLeft()->getRight()->getLeft()).cost +
-                                 min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
-                                 "A0I22"
-                                 + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
-                                 + min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree
+                min_cost_box(root->getLeft()->getLeft()->getLeft()).cost +
+                min_cost_box(root->getLeft()->getLeft()->getRight()).cost +
+                min_cost_box(root->getLeft()->getRight()->getLeft()).cost +
+                min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
+                "A0I22"
+                + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree
+                + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree
             ));
 
 
@@ -630,11 +631,11 @@ OutBox min_cost_box (node* root){
         //OR2
         if (root->getNAND() && root->getLeft()->getNOT() && root->getRight()->getNOT()) {
             Quavo.enqueue(OutBox(4
-                                 + min_cost_box(root->getLeft()->getLeft()).cost
-                                 + min_cost_box(root->getRight()->getLeft()).cost,
-                                 "OR2"
-                                 +min_cost_box(root->getLeft()->getLeft()).bintree
-                                 + min_cost_box(root->getRight()->getLeft()).bintree));
+                + min_cost_box(root->getLeft()->getLeft()).cost
+                + min_cost_box(root->getRight()->getLeft()).cost,
+                "OR2"
+                + min_cost_box(root->getLeft()->getLeft()).bintree
+                + min_cost_box(root->getRight()->getLeft()).bintree));
         }
 
 
@@ -642,9 +643,9 @@ OutBox min_cost_box (node* root){
         //NAND
         if (root->getNAND()) {
             Quavo.enqueue(OutBox(3 + min_cost_box(root->getLeft()).cost + min_cost_box(root->getRight()).cost,
-                                 "NAND2"
-                                 + min_cost_box(root->getLeft()).bintree
-                                 + min_cost_box(root->getRight()).bintree));
+                "NAND2"
+                + min_cost_box(root->getLeft()).bintree
+                + min_cost_box(root->getRight()).bintree));
         }
 
 
@@ -708,8 +709,8 @@ int min_cost(node* root) {
             root->getLeft()->getRight()->getNOT()) {
             std::cout << "AO121 CALLED" << std::endl;
             Quavo.enqueue(7 + min_cost(root->getLeft()->getLeft()->getLeft()) +
-                          min_cost(root->getLeft()->getLeft()->getRight())
-                          + min_cost(root->getLeft()->getRight()->getLeft()));
+                min_cost(root->getLeft()->getLeft()->getRight())
+                + min_cost(root->getLeft()->getRight()->getLeft()));
         }
 
         //A0I22
@@ -717,10 +718,10 @@ int min_cost(node* root) {
         if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNAND() &&
             root->getLeft()->getRight()->getNAND()) {
             Quavo.enqueue(7 +
-                          min_cost(root->getLeft()->getLeft()->getLeft()) +
-                          min_cost(root->getLeft()->getLeft()->getRight()) +
-                          min_cost(root->getLeft()->getRight()->getLeft()) +
-                          min_cost(root->getLeft()->getRight()->getLeft())
+                min_cost(root->getLeft()->getLeft()->getLeft()) +
+                min_cost(root->getLeft()->getLeft()->getRight()) +
+                min_cost(root->getLeft()->getRight()->getLeft()) +
+                min_cost(root->getLeft()->getRight()->getLeft())
             );
 
 
@@ -752,104 +753,6 @@ int min_cost(node* root) {
     std::cout << return_min(Quavo) << std::endl;
     return return_min(Quavo);
 }
-
-
-
-
-/*OutBox min_cost_box(node* root) {
-    Queue<OutBox> Quavo = Queue<OutBox>();
-
-
-    if (root == NULL) {
-        OutBox O = OutBox(0, "INPUT ");
-        return O;
-    }
-    //INPUT
-    if (root->getINPUT()) {
-
-        OutBox O = OutBox(0, "INPUT ");
-        return O;
-    }
-
-    if (root->getRight() == NULL) {
-        //NOT
-        if (root->getNOT() && root->getLeft() == NULL) {
-            OutBox O = OutBox(2, "NOT ");
-            return O;
-        }
-
-        if (root->getNOT()) {
-
-            Quavo.enqueue(OutBox(2 + min_cost_box(root->getLeft()).cost,
-                                 "NOT " + min_cost_box(root->getLeft()).bintree));
-        }
-
-        //AND2
-        if (root->getNOT() && root->getLeft()->getNAND()) {
-            Quavo.enqueue(OutBox(4 + min_cost_box(root->getLeft()->getLeft()).cost
-                                 + min_cost_box(root->getLeft()->getRight()).cost, "AND2"
-                                 + min_cost_box(root->getLeft()->getLeft()).bintree
-                                 + min_cost_box(root->getLeft()->getRight()).bintree));
-        }
-        //NOR2
-        if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNOT() &&
-            root->getLeft()->getRight()->getNOT()) {
-
-        }
-
-        //AOI21
-        if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNAND() &&
-            root->getLeft()->getRight()->getNOT()) {
-            Quavo.enqueue(OutBox(7 + min_cost_box(root->getLeft()->getLeft()->getLeft()).cost
-                                 + min_cost_box(root->getLeft()->getLeft()->getRight()).cost
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).cost,
-                                 "A0I21 " + min_cost_box(root->getLeft()->getLeft()->getLeft()).bintree
-                                 + min_cost_box(root->getLeft()->getLeft()->getRight()).bintree
-                                 + min_cost_box(root->getLeft()->getRight()->getLeft()).bintree));
-        }
-
-        //A0I22
-
-        if (root->getNOT() && root->getLeft()->getNAND() && root->getLeft()->getLeft()->getNAND() &&
-            root->getLeft()->getRight()->getNAND()) {
-
-
-
-        }
-
-
-    }
-    else {
-        //OR2
-        if (root->getNAND() && root->getLeft()->getNOT() && root->getRight()->getNOT()) {
-            Quavo.enqueue(OutBox(4 + min_cost_box(root->getLeft()->getLeft()).cost + min_cost_box(root->getRight()->getLeft()).cost,
-                                 "OR2 " + min_cost_box(root->getLeft()->getLeft()).bintree + min_cost_box(root->getRight()->getLeft()).bintree));
-        }
-
-
-
-        //NAND
-        if (root->getNAND()) {
-
-        }
-    }
-    int min = Quavo.arr[0].cost;
-    int j = 0;
-    for (int i = 0; i < Quavo.size; i++) {
-        if (min > Quavo.arr[i].cost) {
-            min = Quavo.arr[i].cost;
-            j = i;
-        }
-
-    }
-    std::cout << std::endl;
-    std::cout << "MIN IN THIS LEVEL";
-    std::cout << Quavo.arr[j].cost << std::endl;
-    std::cout << "FINAL TREE" << Quavo.arr[j + 1].bintree << std::endl;
-    return Quavo.arr[j];
-}*/
-
-
 
 
 std::string string_decomposed_tree(node* root) {
@@ -1096,31 +999,9 @@ int ascii_to_index(char A) {
     return static_cast<int> (A) - 97;
 }
 
-int power(int a, int b){
-    if(b == 0){
-        return 1;
-    }
-    else{
-        return a* power(a,b-1);
-    }
-}
-
-int custom_stoi(std::string a){
-    if(a.empty()){
-        return 0;
-    }
-    else if(a.size()==1){
-        return a[0]-'0';
-    }
-    else{
-        return custom_stoi(a.substr(0,1))* power(10,a.size()-1)+ custom_stoi(a.substr(1));
-    }
-}
-
 int t_index_extraction(std::string c, int inputs) {
-    return (inputs - 1) + custom_stoi(c.substr(1));
+    return (inputs - 1) + std::stoi(c.substr(1));
 }
-
 
 int index_extractions(std::string S, int inputs) {
     if (S.length() < 2) {
@@ -1153,11 +1034,11 @@ Queue<node*> create_Sub_Trees(Queue<Queue<std::string>>orders, int inputs) {
         //WHICH OPERATION
         if (orders.arr[i].arr[1] == "OR") {
             tmp = OR(selection.arr[index_extractions(orders.arr[i].arr[2], inputs)],
-                     selection.arr[index_extractions(orders.arr[i].arr[3], inputs)]);
+                selection.arr[index_extractions(orders.arr[i].arr[3], inputs)]);
         }
         else if (orders.arr[i].arr[1] == "AND2") {
             tmp = AND(selection.arr[index_extractions(orders.arr[i].arr[2], inputs)],
-                      selection.arr[index_extractions(orders.arr[i].arr[3], inputs)]);
+                selection.arr[index_extractions(orders.arr[i].arr[3], inputs)]);
         }
         else if (orders.arr[i].arr[1] == "NOT1")
         {
@@ -1277,43 +1158,43 @@ Queue<node*> read_inputs_full(std::ifstream& _file) {
 
 //IN CONSOLE 2 REPRESENTS NOT AND 3 REPRESENTS AND
 
-Queue<std::string> ProcessBinaryTreeIntoQueue(const std::string& A){
-   std::string MOD = A;
+Queue<std::string> ProcessBinaryTreeIntoQueue(const std::string& A) {
+    std::string MOD = A;
     Queue<std::string > B = Queue<std::string>();
 
     std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
     int input_counter = 0;
-    while (!MOD.empty()){
-        if(MOD.substr(0,3)=="OR2"){
-            B.enqueue(MOD.substr(0,3));
+    while (!MOD.empty()) {
+        if (MOD.substr(0, 3) == "OR2") {
+            B.enqueue(MOD.substr(0, 3));
             MOD = MOD.substr(3);
         }
-        else if(MOD.substr(0,4)=="AND2"){
-            B.enqueue(MOD.substr(0,4));
+        else if (MOD.substr(0, 4) == "AND2") {
+            B.enqueue(MOD.substr(0, 4));
             MOD = MOD.substr(4);
         }
-        else if(MOD.substr(0,4)=="NOR2"){
-            B.enqueue(MOD.substr(0,4));
+        else if (MOD.substr(0, 4) == "NOR2") {
+            B.enqueue(MOD.substr(0, 4));
             MOD = MOD.substr(4);
         }
-        else if(MOD.substr(0,4)=="NOT1"){
-            B.enqueue(MOD.substr(0,4));
+        else if (MOD.substr(0, 4) == "NOT1") {
+            B.enqueue(MOD.substr(0, 4));
             MOD = MOD.substr(4);
         }
-        else if(MOD.substr(0,5)=="NAND2"){
-            B.enqueue(MOD.substr(0,5));
+        else if (MOD.substr(0, 5) == "NAND2") {
+            B.enqueue(MOD.substr(0, 5));
             MOD = MOD.substr(5);
         }
-        else if(MOD.substr(0,5)=="AOI21"){
-            B.enqueue(MOD.substr(0,5));
+        else if (MOD.substr(0, 5) == "AOI21") {
+            B.enqueue(MOD.substr(0, 5));
             MOD = MOD.substr(5);
         }
-        else if(MOD.substr(0,5)=="AOI22"){
-            B.enqueue(MOD.substr(0,5));
+        else if (MOD.substr(0, 5) == "AOI22") {
+            B.enqueue(MOD.substr(0, 5));
             MOD = MOD.substr(5);
         }
-        else if(MOD.substr(0,5)=="INPUT"){
-            B.enqueue(alphabet.substr(0,1));
+        else if (MOD.substr(0, 5) == "INPUT") {
+            B.enqueue(alphabet.substr(0, 1));
             alphabet = alphabet.substr(1);
             MOD = MOD.substr(5);
         }
@@ -1326,56 +1207,56 @@ Queue<std::string> ProcessBinaryTreeIntoQueue(const std::string& A){
 }
 
 
-void Print_Out_Netlist(Queue<std::string> JordanPoole ){
+void Print_Out_Netlist(Queue<std::string> JordanPoole) {
     Queue<std::string> Postfix = Queue<std::string>();
     int len = JordanPoole.size;
     int i = 0;
-    while (JordanPoole.size>1) {
+    while (JordanPoole.size > 1) {
 
         if (JordanPoole.peek_stack().size() == 1) {
             Postfix.enqueue(JordanPoole.pop_stack());
 
         }
-        else if(JordanPoole.peek_stack() == "NOT1"){
+        else if (JordanPoole.peek_stack() == "NOT1") {
             i++;
-            std::cout<<"t"<<i<<" = "<<JordanPoole.pop_stack()<< " " <<Postfix.pop_stack()<<std::endl;
+            std::cout << "t" << i << " = " << JordanPoole.pop_stack() << " " << Postfix.pop_stack() << std::endl;
             Postfix.enqueue("t" + std::to_string(i));
         }
-        else if(JordanPoole.peek_stack() == "AND2"){
+        else if (JordanPoole.peek_stack() == "AND2") {
             i++;
-            std::cout<<"t"<<i<<" = "<<JordanPoole.pop_stack()<<" "<<
-            Postfix.pop_stack()<<" "<<Postfix.pop_stack()<<" "<<std::endl;
+            std::cout << "t" << i << " = " << JordanPoole.pop_stack() << " " <<
+                Postfix.pop_stack() << " " << Postfix.pop_stack() << " " << std::endl;
             Postfix.enqueue("t" + std::to_string(i));
         }
-        else if(JordanPoole.peek_stack() == "AOI21"){
+        else if (JordanPoole.peek_stack() == "AOI21") {
             i++;
-            std::cout<<"t"<<i<<" = "<<JordanPoole.pop_stack()<<" "<<Postfix.pop_stack()<<" "
-            <<Postfix.pop_stack()<<" "<<
-            Postfix.pop_stack()<<std::endl;
+            std::cout << "t" << i << " = " << JordanPoole.pop_stack() << " " << Postfix.pop_stack() << " "
+                << Postfix.pop_stack() << " " <<
+                Postfix.pop_stack() << std::endl;
             Postfix.enqueue("t" + std::to_string(i));
         }
-        else if(JordanPoole.peek_stack() == "A0I22"){
+        else if (JordanPoole.peek_stack() == "A0I22") {
             i++;
-            std::cout<<"t"<<i<<" = "<<JordanPoole.pop_stack()<<" "<<Postfix.pop_stack()<<" "<<
-            Postfix.pop_stack()<<" "<<
-            Postfix.pop_stack()<<" "<<
-            Postfix.pop_stack()<<" "<<
-            std::endl;
+            std::cout << "t" << i << " = " << JordanPoole.pop_stack() << " " << Postfix.pop_stack() << " " <<
+                Postfix.pop_stack() << " " <<
+                Postfix.pop_stack() << " " <<
+                Postfix.pop_stack() << " " <<
+                std::endl;
             Postfix.enqueue("t" + std::to_string(i));
         }
-        else if(JordanPoole.peek_stack() == "NOR2"){
+        else if (JordanPoole.peek_stack() == "NOR2") {
             i++;
-            std::cout<<"t"<<i<<" = "<<JordanPoole.pop_stack()<<" "<<Postfix.pop_stack()<<" "<<Postfix.pop_stack()<<std::endl;
+            std::cout << "t" << i << " = " << JordanPoole.pop_stack() << " " << Postfix.pop_stack() << " " << Postfix.pop_stack() << std::endl;
             Postfix.enqueue("t" + std::to_string(i));
         }
-        else if(JordanPoole.peek_stack() == "NAND2"){
+        else if (JordanPoole.peek_stack() == "NAND2") {
             i++;
-            std::cout<<"t"<<i<<" = "<<JordanPoole.pop_stack()<<" "<<Postfix.pop_stack()<<" "<<Postfix.pop_stack()<<std::endl;
+            std::cout << "t" << i << " = " << JordanPoole.pop_stack() << " " << Postfix.pop_stack() << " " << Postfix.pop_stack() << std::endl;
             Postfix.enqueue("t" + std::to_string(i));
         }
-        else if(JordanPoole.peek_stack() == "OR2"){
+        else if (JordanPoole.peek_stack() == "OR2") {
             i++;
-            std::cout<<"t"<<i<<" = "<<JordanPoole.pop_stack()<<" "<<Postfix.pop_stack()<<" "<<Postfix.pop_stack()<<std::endl;
+            std::cout << "t" << i << " = " << JordanPoole.pop_stack() << " " << Postfix.pop_stack() << " " << Postfix.pop_stack() << std::endl;
             Postfix.enqueue("t" + std::to_string(i));
         }
 
@@ -1385,46 +1266,46 @@ void Print_Out_Netlist(Queue<std::string> JordanPoole ){
     if (JordanPoole.peek_stack().size() == 1) {
         Postfix.enqueue(JordanPoole.pop());
     }
-    else if(JordanPoole.peek_stack() == "NOT1"){
+    else if (JordanPoole.peek_stack() == "NOT1") {
         i++;
-        std::cout<<"P"<<" = "<<JordanPoole.pop_stack()<< " " <<Postfix.pop_stack()<<std::endl;
+        std::cout << "P" << " = " << JordanPoole.pop_stack() << " " << Postfix.pop_stack() << std::endl;
         Postfix.enqueue("t" + std::to_string(i));
     }
-    else if(JordanPoole.peek_stack() == "AND2"){
+    else if (JordanPoole.peek_stack() == "AND2") {
         i++;
-        std::cout<<"P"<<" = "<<JordanPoole.pop_stack()<<" "<<Postfix.pop_stack()<<" "<<Postfix.pop_stack()<<" "<<std::endl;
+        std::cout << "P" << " = " << JordanPoole.pop_stack() << " " << Postfix.pop_stack() << " " << Postfix.pop_stack() << " " << std::endl;
         Postfix.enqueue("t" + std::to_string(i));
     }
-    else if(JordanPoole.peek_stack() == "AOI21"){
+    else if (JordanPoole.peek_stack() == "AOI21") {
         i++;
-        std::cout<<"P"<<" = "<<JordanPoole.pop_stack()<<" "<<Postfix.pop_stack()
-                 <<" "<<Postfix.pop_stack()<<" "<<
-                 Postfix.pop_stack()<<std::endl;
+        std::cout << "P" << " = " << JordanPoole.pop_stack() << " " << Postfix.pop_stack()
+            << " " << Postfix.pop_stack() << " " <<
+            Postfix.pop_stack() << std::endl;
         Postfix.enqueue("t" + std::to_string(i));
     }
-    else if(JordanPoole.peek_stack() == "A0I22"){
+    else if (JordanPoole.peek_stack() == "A0I22") {
         i++;
-        std::cout<<"P"<<" = "<<JordanPoole.pop_stack()<<Postfix.pop_stack()<<" "<<
-                 Postfix.pop_stack()<<" "<<
-                 Postfix.pop_stack()<<" "<<
-                 Postfix.pop_stack()<<" "<<
-                 std::endl;
+        std::cout << "P" << " = " << JordanPoole.pop_stack() << Postfix.pop_stack() << " " <<
+            Postfix.pop_stack() << " " <<
+            Postfix.pop_stack() << " " <<
+            Postfix.pop_stack() << " " <<
+            std::endl;
         Postfix.enqueue("t" + std::to_string(i));
     }
-    else if(JordanPoole.peek_stack() == "NOR2"){
+    else if (JordanPoole.peek_stack() == "NOR2") {
         i++;
-        std::cout<<"P"<<" = "<<JordanPoole.pop_stack()<<" "<<Postfix.pop_stack()<<" "<<
-        Postfix.pop_stack()<<std::endl;
+        std::cout << "P" << " = " << JordanPoole.pop_stack() << " " << Postfix.pop_stack() << " " <<
+            Postfix.pop_stack() << std::endl;
         Postfix.enqueue("t" + std::to_string(i));
     }
-    else if(JordanPoole.peek_stack() == "NAND2"){
+    else if (JordanPoole.peek_stack() == "NAND2") {
         i++;
-        std::cout<<"P"<<" = "<<JordanPoole.pop_stack()<<" "<<Postfix.pop_stack()<<" "<<Postfix.pop_stack()<<std::endl;
+        std::cout << "P" << " = " << JordanPoole.pop_stack() << " " << Postfix.pop_stack() << " " << Postfix.pop_stack() << std::endl;
         Postfix.enqueue("t" + std::to_string(i));
     }
-    else if(JordanPoole.peek_stack() == "OR2"){
+    else if (JordanPoole.peek_stack() == "OR2") {
         i++;
-        std::cout<<"P"<<" = "<<JordanPoole.pop_stack()<<" "<<Postfix.pop_stack()<<" "<<Postfix.pop_stack()<<std::endl;
+        std::cout << "P" << " = " << JordanPoole.pop_stack() << " " << Postfix.pop_stack() << " " << Postfix.pop_stack() << std::endl;
         Postfix.enqueue("t" + std::to_string(i));
     }
 
@@ -1473,10 +1354,10 @@ void read_inputs_to_the_full(std::ifstream& _file) {
     Queue<node*> L = create_Sub_Trees_clone(equation_details, out);
 
 
-    for(int i = 0; i<in; i++){
-        std::cout<<"Output Netlist "<<in-i<<":"<<std::endl;
-        std::cout<<"Minimum cost: ";
-        std::cout<<min_cost_box(L.peek_stack()).cost<<std::endl;
+    for (int i = 0; i < in; i++) {
+        std::cout << "Input " << i + 1 << ":" << std::endl;
+        std::cout << "Minimum cost: ";
+        std::cout << min_cost_box(L.peek_stack()).cost << std::endl;
         Print_Out_Netlist(ProcessBinaryTreeIntoQueue(min_cost_box(L.peek_stack()).bintree));
 
         L.pop_stack();
@@ -1494,20 +1375,20 @@ int main() {
     bool run = true;
     std::string filename;
     std::string condition;
-    while(run) {
+    while (run) {
+        std::cout << "Hello, World!" << std::endl;
         std::cout << "Welcome to the Technology Mapping Program:" << std::endl;
         std::cout << "What file would you like to read today????" << std::endl;
-        std::cout<<"File name: ";
+        std::cout << "File name: ";
 
-        std::cin>>filename;
+        std::cin >> filename;
         std::ifstream _file(filename);
         read_inputs_to_the_full(_file);
-        std::cout<<" enter X to exit or write E to enter another file"<<std::endl;
-        std::cin>>condition;
-        if(condition == "X"){
+        std::cout << " enter X to exit or write E to enter another file" << std::endl;
+        std::cin >> condition;
+        if (condition == "X") {
             run = false;
         }
     }
-
     return 0;
 }
